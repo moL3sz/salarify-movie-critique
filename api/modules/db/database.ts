@@ -1,4 +1,3 @@
-import * as fs from "fs";
 import {Response} from "express";
 import {movie, partial_movie} from "../../misc/models";
 const sqlite3 = require("sqlite3").verbose()
@@ -31,7 +30,7 @@ export const addMovie = (movie: movie, res: Response) =>{
 }
 
 export const getMovies = (page_number: number, res: Response) =>{
-    const offset = (page_number-1) * 6; //beacuse 3*2 grid has 6 cells
+    const offset = (page_number-1) * 6; //because 3*2 grid has 6 cells
 
     //partial query
     const SQL =  `SELECT img_url, name,year,r.* from movies m
@@ -84,15 +83,16 @@ export const getMovies = (page_number: number, res: Response) =>{
 
 //get the page number size
 export const getPageSize = (res: Response)=>{
-    db.get("SELECT count(*) from movies ", (err:Error, result: number)=>{
+    db.get("SELECT count(*) as size from movies ", (err:Error, result: { size: number })=>{
         if(err){
             res.send({
                 page_size: 0
             })
             return
         }
+        console.log(result)
         res.send({
-            page_size: Math.floor(result / 6) // 6 movie per page
+            page_size: Math.ceil(result.size / 6) // 6 movie per page
         })
     })
 }

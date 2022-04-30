@@ -14,7 +14,7 @@ app.get("/movies/:id",(req:Request, res:Response) => {
     const id = req.params.id
     getMovieById(id, res);
 })
-app.get("/movies/page/size",(req:Request, res:Response) => {
+app.get("/movies/pages/size",(req:Request, res:Response) => {
     getPageSize(res);
 })
 

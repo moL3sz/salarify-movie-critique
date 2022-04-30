@@ -29,7 +29,7 @@ const addMovie = (movie, res) => {
 };
 exports.addMovie = addMovie;
 const getMovies = (page_number, res) => {
-    const offset = (page_number - 1) * 6; //beacuse 3*2 grid has 6 cells
+    const offset = (page_number - 1) * 6; //because 3*2 grid has 6 cells
     //partial query
     const SQL = `SELECT img_url, name,year,r.* from movies m
                  INNER JOIN ratings r
@@ -64,15 +64,16 @@ const getMovies = (page_number, res) => {
 exports.getMovies = getMovies;
 //get the page number size
 const getPageSize = (res) => {
-    db.get("SELECT count(*) from movies ", (err, result) => {
+    db.get("SELECT count(*) as size from movies ", (err, result) => {
         if (err) {
             res.send({
                 page_size: 0
             });
             return;
         }
+        console.log(result);
         res.send({
-            page_size: Math.floor(result / 6) // 6 movie per page
+            page_size: Math.ceil(result.size / 6) // 6 movie per page
         });
     });
 };

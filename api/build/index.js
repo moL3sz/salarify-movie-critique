@@ -17,7 +17,7 @@ app.get("/movies/:id", (req, res) => {
     const id = req.params.id;
     (0, database_1.getMovieById)(id, res);
 });
-app.get("/movies/page/size", (req, res) => {
+app.get("/movies/pages/size", (req, res) => {
     (0, database_1.getPageSize)(res);
 });
 app.listen(globals_1.PORT, () => {
