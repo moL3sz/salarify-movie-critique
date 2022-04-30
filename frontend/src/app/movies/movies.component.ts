@@ -7,10 +7,17 @@ import {MoviesService} from "./movies.service";
   styleUrls: ['./movies.component.scss']
 })
 export class MoviesComponent implements OnInit {
-
-  constructor(private serivce: MoviesService) { }
+  loading: boolean = true;
+  // currentPage: number;
+  constructor(private service: MoviesService) { }
 
   ngOnInit(): void {
+    // get movies from the API
+    this.service.getMovies()
+      .then()
+      .then()
+      .finally(()=>{
+        this.loading = false;
+      })
   }
-
 }

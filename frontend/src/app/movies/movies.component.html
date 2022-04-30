@@ -1,5 +1,16 @@
-<div class="movies h-full text-white" style="background-color: #0a0a0a">
-  <div class="movies-container flex items-center">
+<div class="movies h-full text-white flex flex-col" style="background-color: #0a0a0a">
+  <div class="movies-container flex justify-center flex-col items-center h-full space-y-20">
+    <div class="movies-grid grid grid-cols-3 grid-rows-2 g gap-10">
+      <app-movie-card></app-movie-card>
+      <app-movie-card></app-movie-card>
+      <app-movie-card></app-movie-card>
+      <app-movie-card></app-movie-card>
+      <app-movie-card></app-movie-card>
+      <app-movie-card></app-movie-card>
+    </div>
+    <mat-paginator>
 
+    </mat-paginator>
   </div>
+
 </div>
