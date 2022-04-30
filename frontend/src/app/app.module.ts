@@ -4,10 +4,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
+import { MoviesComponent } from './movies/movies.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MoviesComponent
   ],
   imports: [
     BrowserModule,
