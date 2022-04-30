@@ -5,16 +5,22 @@ export interface movie{
     director: string;
     stars: string;
     writers: string;
-    imgUrl: string;
+    img_url: string;
     review: string;
     ratings: rating
 }
 export interface rating{
     directing: number;
     acting: number;
-    costumeDesign: number;
+    costume_design: number;
     editing: number;
     music: number;
-    visualEffects: number;
+    visual_effects: number;
     screenplay: number;
+}
+export interface partial_movie{
+    name:string;
+    year: string;
+    img_url: string;
+    rating: number;
 }

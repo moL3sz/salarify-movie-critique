@@ -13,6 +13,13 @@ app.get("/movies/page/:page", (req, res) => {
     const page_number = parseInt(req.params.page, 10);
     (0, database_1.getMovies)(page_number, res);
 });
+app.get("/movies/:id", (req, res) => {
+    const id = req.params.id;
+    (0, database_1.getMovieById)(id, res);
+});
+app.get("/movies/page/size", (req, res) => {
+    (0, database_1.getPageSize)(res);
+});
 app.listen(globals_1.PORT, () => {
     console.log(`Server has started at http://localhost:${globals_1.PORT}`);
 });

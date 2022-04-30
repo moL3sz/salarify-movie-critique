@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import {movie, partial_movie} from "../../misc/models";
+import {API} from "../../misc/globals";
 
 @Injectable({
   providedIn: 'root'
@@ -6,7 +8,31 @@ import { Injectable } from '@angular/core';
 export class MoviesService {
 
   constructor() { }
-  getMovies(){
-    //
+  async getMovies(page: number): Promise<{ success:boolean, movies: partial_movie[] }>{
+    const endpoint = `${API}/movies/page/${page}`
+    console.log("ASD")
+    try {
+      const data = await fetch(endpoint);
+      const parsed = await data.json()
+      console.log(parsed)
+      return {success:parsed.success, movies:parsed.movies}
+    }
+    catch (e) {
+      //check if the fetch hasn't got repsonse
+      return {
+          success: false,
+          movies:[]
+      }
+    }
+
+  }
+  async updateMovie(movie: movie){
+
+  }
+  async deleteMovie(id:number){
+
+  }
+  async addMove(movie: movie){
+
   }
 }
