@@ -6,12 +6,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 import { MoviesComponent } from './movies/movies.component';
 import { MovieCardComponent } from './movie-card/movie-card.component';
+import { PaginatorComponent } from './paginator/paginator.component';
+import { MovieDescriptionCardComponent } from './movie-description-card/movie-description-card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MoviesComponent,
-    MovieCardComponent
+    MovieCardComponent,
+    PaginatorComponent,
+    MovieDescriptionCardComponent
   ],
   imports: [
     BrowserModule,

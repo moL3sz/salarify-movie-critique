@@ -15,7 +15,7 @@
     *ngIf="!loading && currentMovies.length === 0">
       Something went wrong with the server!
     </div>
-    <app-paginator></app-paginator>
+    <app-paginator [currentPage]="currentPage" (currentPageEmitter)="onPageChange($event)"></app-paginator>
   </div>
 
 </div>

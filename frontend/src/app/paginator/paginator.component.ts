@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {MoviesService} from "../movies/movies.service";
 
 @Component({
   selector: 'app-paginator',
@@ -7,9 +8,39 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PaginatorComponent implements OnInit {
 
-  constructor() { }
+
+  pages?: number;
+  @Input() currentPage!: number;
+
+  @Output() currentPageEmitter = new EventEmitter<number>()
+  numberOfPage: number = 5;
+  constructor(private service: MoviesService) { }
 
   ngOnInit(): void {
+    this.service.getPages()
+      .then(result =>{
+        console.log(result)
+        if(result.sucess){
+          this.pages = result.size
+          if(this.pages < this.numberOfPage){
+            this.numberOfPage = this.pages;
+          }
+        }
+      })
+  }
+  nextPage(): void{
+    this.currentPage += 1
+    this.currentPageEmitter.emit(this.currentPage);
+  }
+  previousPage(): void{
+    this.currentPage -= 1
+    this.currentPageEmitter.emit(this.currentPage);
+
+  }
+  setPage(event: any): void{
+    this.currentPage = parseInt(event.target.id)
+    this.currentPageEmitter.emit(this.currentPage);
+
   }
 
 }

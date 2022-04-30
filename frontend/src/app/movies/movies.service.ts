@@ -10,7 +10,7 @@ export class MoviesService {
   constructor() { }
   async getMovies(page: number): Promise<{ success:boolean, movies: partial_movie[] }>{
     const endpoint = `${API}/movies/page/${page}`
-    console.log("ASD")
+
     try {
       const data = await fetch(endpoint);
       const parsed = await data.json()
@@ -19,12 +19,8 @@ export class MoviesService {
     }
     catch (e) {
       //check if the fetch hasn't got repsonse
-      return {
-          success: false,
-          movies:[]
-      }
+      return {success: false, movies:[]}
     }
-
   }
   async updateMovie(movie: movie){
 
@@ -34,5 +30,22 @@ export class MoviesService {
   }
   async addMove(movie: movie){
 
+  }
+  async getPages(): Promise<{sucess: boolean, size: number}>{
+    try {
+      const endpoint = `${API}/movies/pages/size`;
+      const data = await fetch(endpoint);
+      const parsed: {page_size: number} = await data.json()
+      return {
+        sucess: true,
+        size: parsed.page_size
+      }
+    }
+    catch (e){
+      return {
+        sucess: false,
+        size: -1
+      }
+    }
   }
 }

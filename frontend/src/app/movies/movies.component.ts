@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MoviesService} from "./movies.service";
 import {movie, partial_movie} from "../../misc/models";
 
@@ -11,14 +11,26 @@ export class MoviesComponent implements OnInit {
   loading: boolean = true;
   // currentPage: number;
   currentMovies: partial_movie[] = []
+  currentPage: number = 1;
   constructor(private service: MoviesService) { }
   ngOnInit(): void {
     // get movies from the API
-    this.service.getMovies(1)
+    this.loadMovies(this.currentPage)
+
+  }
+  onPageChange(page: number){
+    this.loadMovies(page);
+  }
+
+  loadMovies(page: number): void{
+    this.service.getMovies(page)
       .then(({movies, success}) => {
         if(!success){
           //something went wrong
-          console.error("Something went wrong!")
+          setTimeout(()=>{
+            this.ngOnInit()
+            this.loading = true
+          },2500)
           this.loading = false
           return
         }
