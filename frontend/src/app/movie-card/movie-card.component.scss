@@ -3,4 +3,11 @@
   .movie-card-content{
     background-size: cover;
   }
+  &{
+    transition: all 0.1s ease-in-out;
+    box-shadow: 0 10px 20px 2px rgba(42, 42, 42, 0.53);
+  }
+  &:hover{
+    transform: scale(1.07);
+  }
 }

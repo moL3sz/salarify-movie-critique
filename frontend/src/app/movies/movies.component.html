@@ -1,16 +1,21 @@
 <div class="movies h-full text-white flex flex-col" style="background-color: #0a0a0a">
-  <div class="movies-container flex justify-center flex-col items-center h-full space-y-20">
-    <div class="movies-grid grid grid-cols-3 grid-rows-2 g gap-10">
-      <app-movie-card></app-movie-card>
-      <app-movie-card></app-movie-card>
-      <app-movie-card></app-movie-card>
-      <app-movie-card></app-movie-card>
-      <app-movie-card></app-movie-card>
-      <app-movie-card></app-movie-card>
-    </div>
-    <mat-paginator>
+  <div class="movies-container flex justify-center flex-col items-center h-fit min-h-[80vh] space-y-20 p-10">
 
-    </mat-paginator>
+    <div class="movies-grid grid grid-cols-3 grid-rows-2 g gap-10" *ngIf="!loading">
+      <app-movie-card [movie]="movie" *ngFor="let movie of currentMovies"></app-movie-card>
+    </div>
+    <mat-progress-spinner
+      class="example-margin"
+      color="primary"
+      mode="indeterminate"
+      *ngIf="loading"
+      >
+    </mat-progress-spinner>
+    <div class="on-error text-zinc-700 text-4xl"
+    *ngIf="!loading && currentMovies.length === 0">
+      Something went wrong with the server!
+    </div>
+    <app-paginator></app-paginator>
   </div>
 
 </div>
