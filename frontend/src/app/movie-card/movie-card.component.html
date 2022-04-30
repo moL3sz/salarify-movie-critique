@@ -1,13 +1,13 @@
-<div class="movie-card h-[32vh] w-[27vh] bg-white">
+<div class="movie-card h-[35vh] w-[27vh] bg-white">
   <div class="movie-card-content flex flex-col h-full justify-end" [ngStyle]="{'background-image': 'url('+
 
   movie?.img_url
   +')'}">
-    <div class="movie-title h-20 bg-pink text-sm p-3">
-      <div class="title-text">
+    <div class="movie-title min-h-[10vh] bg-pink text-sm p-3">
+      <div class="title-text mb-3">
         {{movie?.name}}
       </div>
-      <div class="details flex flex-row justify-between mt-4">
+      <div class="details flex flex-row justify-between mt-2">
         <div class="year">
           {{movie?.year}}
         </div>
