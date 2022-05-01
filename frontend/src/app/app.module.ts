@@ -8,6 +8,7 @@ import { MoviesComponent } from './movies/movies.component';
 import { MovieCardComponent } from './movie-card/movie-card.component';
 import { PaginatorComponent } from './paginator/paginator.component';
 import { MovieDescriptionCardComponent } from './movie-description-card/movie-description-card.component';
+import { AddModifyMovieComponent } from './add-modify-movie/add-modify-movie.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { MovieDescriptionCardComponent } from './movie-description-card/movie-de
     MoviesComponent,
     MovieCardComponent,
     PaginatorComponent,
-    MovieDescriptionCardComponent
+    MovieDescriptionCardComponent,
+    AddModifyMovieComponent
   ],
   imports: [
     BrowserModule,

@@ -3,6 +3,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateMovie = exports.getMovieById = exports.getPageSize = exports.getMovies = exports.addMovie = void 0;
 const sqlite3 = require("sqlite3").verbose();
 const db = new sqlite3.Database(__dirname + "/database.sqlite");
+const validateMovie = (movie) => {
+    if (movie.name != "")
+        return false;
+    if (!parseInt(movie.year)) //check if year is a number
+        return false;
+    return true;
+};
 const addMovie = (movie, res) => {
     try {
         db.serialize(() => {

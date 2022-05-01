@@ -28,7 +28,11 @@ export class MoviesService {
 
   }
   async addMove(movie: movie){
-
+    const endpoint = `${API}/movies`
+    const data = await fetch(endpoint,{
+      method:"POST",
+      body: JSON.stringify(movie)
+    })
   }
   async getPages(): Promise<{success: boolean, size: number}>{
     try {

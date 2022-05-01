@@ -1,6 +1,7 @@
 import {Component, Input, OnInit, Inject} from '@angular/core';
-import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 import {MoviesService} from "../movies/movies.service";
+import {AddModifyMovieComponent} from "../add-modify-movie/add-modify-movie.component";
 import {movie} from "../../misc/models";
 
 @Component({
@@ -15,7 +16,9 @@ export class MovieDescriptionCardComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: {
       id:number
       ref: any
-    }, private service: MoviesService
+    }, private service: MoviesService,
+    public editDialog: MatDialog
+
   ) { }
 
   ngOnInit(): void {
@@ -46,8 +49,22 @@ export class MovieDescriptionCardComponent implements OnInit {
     }
   }
   close(){
-
     this.data.ref.closeAll()
   }
+  delete(): void{
+
+  }
+  edit(): void{
+    this.data.ref.closeAll()
+    //close
+   this.data.ref.open(AddModifyMovieComponent,{
+      data:{
+        ref: this.editDialog,
+        movie:this.movie
+      }
+    })
+
+  }
+
 
 }

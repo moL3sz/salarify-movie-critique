@@ -9,6 +9,7 @@ const cors_1 = __importDefault(require("cors"));
 const database_1 = require("./modules/db/database");
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
+app.use(express_1.default.json()); //middleware for json parse
 app.get("/movies/page/:page", (req, res) => {
     const page_number = parseInt(req.params.page, 10);
     (0, database_1.getMovies)(page_number, res);
@@ -16,6 +17,11 @@ app.get("/movies/page/:page", (req, res) => {
 app.get("/movies/:id", (req, res) => {
     const id = req.params.id;
     (0, database_1.getMovieById)(id, res);
+});
+app.post("/movies", (req, res) => {
+    const { movie } = req.body;
+    console.log(movie);
+    (0, database_1.addMovie)(movie, res);
 });
 app.get("/movies/pages/size", (req, res) => {
     (0, database_1.getPageSize)(res);

@@ -1,0 +1,23 @@
+.movie-add-edit{
+  .form{
+    input[type="text"]{
+      padding: 0.5rem;
+
+      border-radius: 0.5rem;
+      font-size: medium;
+      border-color: rgba(110, 110, 110, 0.35) !important;
+      border: 1px solid;
+    }
+    input[type="text"]:focus{
+      outline: none !important;
+      border-color: rgba(110, 110, 110, 0.2) !important;
+      border: 1px solid;
+
+    }
+    label{
+      color: #27272a;
+      padding: 1vh 0;
+
+    }
+  }
+}

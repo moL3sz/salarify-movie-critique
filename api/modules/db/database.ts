@@ -4,6 +4,17 @@ const sqlite3 = require("sqlite3").verbose()
 const db = new sqlite3.Database(__dirname + "/database.sqlite")
 
 
+
+const validateMovie = (movie: movie): boolean=>{
+    if(movie.name != "")
+        return false
+    if(!parseInt(movie.year)) //check if year is a number
+        return false
+    return true
+
+}
+
+
 export const addMovie = (movie: movie, res: Response) =>{
     try{
         db.serialize(()=> {
