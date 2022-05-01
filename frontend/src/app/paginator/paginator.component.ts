@@ -19,12 +19,14 @@ export class PaginatorComponent implements OnInit {
   ngOnInit(): void {
     this.service.getPages()
       .then(result =>{
-        console.log(result)
-        if(result.sucess){
+        if(result.success){
           this.pages = result.size
           if(this.pages < this.numberOfPage){
             this.numberOfPage = this.pages;
           }
+        }
+        else{
+          this.ngOnInit()
         }
       })
   }

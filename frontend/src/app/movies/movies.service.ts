@@ -31,19 +31,19 @@ export class MoviesService {
   async addMove(movie: movie){
 
   }
-  async getPages(): Promise<{sucess: boolean, size: number}>{
+  async getPages(): Promise<{success: boolean, size: number}>{
     try {
       const endpoint = `${API}/movies/pages/size`;
       const data = await fetch(endpoint);
       const parsed: {page_size: number} = await data.json()
       return {
-        sucess: true,
+        success: true,
         size: parsed.page_size
       }
     }
     catch (e){
       return {
-        sucess: false,
+        success: false,
         size: -1
       }
     }

@@ -33,7 +33,7 @@ export const getMovies = (page_number: number, res: Response) =>{
     const offset = (page_number-1) * 6; //because 3*2 grid has 6 cells
 
     //partial query
-    const SQL =  `SELECT img_url, name,year,r.* from movies m
+    const SQL =  `SELECT id,img_url, name,year,r.* from movies m
                  INNER JOIN ratings r
                  ON m.id = r.movie_id
                  LIMIT 6 OFFSET ?`;
@@ -72,7 +72,7 @@ export const getMovies = (page_number: number, res: Response) =>{
                 item.visual_effects +
                 item.screenplay) / 7);
 
-            return {name: item.name,year: item.year, img_url: item.img_url, rating: parseFloat(avg_rating.toFixed(1))}
+            return {id:item.id, name: item.name,year: item.year, img_url: item.img_url, rating: parseFloat(avg_rating.toFixed(1))}
         })
         res.send({
             success:true,
@@ -90,7 +90,6 @@ export const getPageSize = (res: Response)=>{
             })
             return
         }
-        console.log(result)
         res.send({
             page_size: Math.ceil(result.size / 6) // 6 movie per page
         })
