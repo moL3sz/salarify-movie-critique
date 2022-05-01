@@ -19,6 +19,7 @@ export interface rating{
     screenplay: number;
 }
 export interface partial_movie{
+    id: number;
     name:string;
     year: string;
     img_url: string;

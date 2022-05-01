@@ -21,6 +21,7 @@ export interface rating{
 
 
 export interface partial_movie{
+  id:number;
   name:string;
   year: string;
   img_url: string;
