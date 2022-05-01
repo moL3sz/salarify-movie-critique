@@ -7,3 +7,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
 overflow: hidden}
 $bluegray: #212121;
 $pink: #c2185b;
+.mat-dialog-container{
+  padding: 0 !important;
+  margin: 0 !important;
+}
+.divider{
+  height: 1px;
+  width: 100%;
+  border-bottom: 1px solid rgba(134, 134, 134, 0.37);
+}

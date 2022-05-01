@@ -17,9 +17,11 @@ export class MovieCardComponent implements OnInit {
   openMovieDialog(): void{
     const movieDialogRef = this.movieDialog.open(MovieDescriptionCardComponent,{
       data:{
-        id:this.movie?.id
+        id:this.movie?.id,
+        ref: this.movieDialog
       }
     })
+
 
   }
 }

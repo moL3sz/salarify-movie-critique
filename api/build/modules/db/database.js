@@ -55,7 +55,6 @@ const getMovies = (page_number, res) => {
                 item.screenplay) / 7);
             return { id: item.id, name: item.name, year: item.year, img_url: item.img_url, rating: parseFloat(avg_rating.toFixed(1)) };
         });
-        console.log(movies);
         res.send({
             success: true,
             movies: movies
@@ -80,9 +79,32 @@ const getPageSize = (res) => {
 exports.getPageSize = getPageSize;
 //will send back the full detailed version of the movie
 const getMovieById = (id, res) => {
-    const SQL = `SELECT * from movies where id = ?`;
+    const SQL = `SELECT *, r.* FROM movies m
+        INNER JOIN ratings r 
+         ON m.id = r.movie_id
+        where id = ?`;
     const movie = db.prepare(SQL);
     movie.get(id, (err, row) => {
+        //map the movie for the correct format
+        const movieResponse = {
+            id: row.id,
+            name: row.name,
+            year: row.year,
+            director: row.director,
+            stars: row.stars,
+            writers: row.writers,
+            img_url: row.img_url,
+            review: row.review,
+            ratings: {
+                directing: row.directing,
+                acting: row.acting,
+                costume_design: row.costume_design,
+                editing: row.editing,
+                music: row.music,
+                visual_effects: row.visual_effects,
+                screenplay: row.screenplay
+            }
+        };
         if (err) {
             res.send({
                 success: false,
@@ -92,7 +114,7 @@ const getMovieById = (id, res) => {
         else {
             res.send({
                 success: true,
-                movie: row
+                movie: movieResponse
             });
         }
     });

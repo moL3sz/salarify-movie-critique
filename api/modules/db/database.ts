@@ -98,9 +98,55 @@ export const getPageSize = (res: Response)=>{
 
 //will send back the full detailed version of the movie
 export const getMovieById = (id: string, res: Response)=>{
-    const SQL = `SELECT * from movies where id = ?`
+    const SQL =
+        `SELECT *, r.* FROM movies m
+        INNER JOIN ratings r 
+         ON m.id = r.movie_id
+        where id = ?`
     const movie = db.prepare(SQL)
-    movie.get(id, (err: Error,row: movie)=>{
+    interface sql_movie{
+        id: number;
+        name: string;
+        year: string;
+        director: string;
+        stars: string;
+        writers: string;
+        img_url: string
+        review: string;
+        //rating structure
+        directing: number;
+        acting: number;
+        costume_design: number;
+        editing: number;
+        music: number;
+        visual_effects: number;
+        screenplay: number;
+    }
+    movie.get(id, (err: Error,row: sql_movie)=>{
+        //map the movie for the correct format
+
+
+        const movieResponse: movie = {
+            id: row.id,
+            name: row.name,
+            year: row.year,
+            director: row.director,
+            stars: row.stars,
+            writers: row.writers,
+            img_url: row.img_url,
+            review: row.review,
+            ratings: {
+                directing: row.directing,
+                acting: row.acting,
+                costume_design: row.costume_design,
+                editing: row.editing,
+                music: row.music,
+                visual_effects: row.visual_effects,
+                screenplay: row.screenplay
+            }
+        }
+
+
         if (err){
             res.send({
                 success:false,
@@ -110,7 +156,7 @@ export const getMovieById = (id: string, res: Response)=>{
         else{
             res.send({
                 success:true,
-                movie:row
+                movie:movieResponse
             })
         }
     })

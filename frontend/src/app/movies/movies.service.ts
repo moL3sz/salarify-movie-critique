@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {movie, partial_movie} from "../../misc/models";
 import {API} from "../../misc/globals";
 
@@ -14,7 +14,6 @@ export class MoviesService {
     try {
       const data = await fetch(endpoint);
       const parsed = await data.json()
-      console.log(parsed)
       return {success:parsed.success, movies:parsed.movies}
     }
     catch (e) {
@@ -45,6 +44,20 @@ export class MoviesService {
       return {
         success: false,
         size: -1
+      }
+    }
+  }
+
+  async  getMovie(id: number): Promise<{success: boolean, movie:movie | undefined}> {
+    try {
+      const endpoint = `${API}/movies/${id}`
+      const data = await fetch(endpoint)
+      return await data.json()
+    } catch (e) {
+      return {
+        success: false,
+        movie: undefined
+
       }
     }
   }

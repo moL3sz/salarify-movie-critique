@@ -1,4 +1,8 @@
-<div class="movie-card h-[35vh] w-[27vh] bg-white">
+
+
+
+<div class="movie-card h-[35vh] w-[27vh] bg-white" (click)="openMovieDialog()">
+
   <div class="movie-card-content flex flex-col h-full justify-end" [ngStyle]="{'background-image': 'url('+
 
   movie?.img_url
