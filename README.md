@@ -10,14 +10,13 @@
 
 
 
-	```bash
-    npm install && npm run install````
+	
+    npm install && npm run install
    <h2> Run the service (UI / API)</h2>
    
 
-	````bash
     npm run dev
-    ````
+    
 
 
 # Summary
@@ -36,4 +35,8 @@ I managed to set up a very simple CORS system as the middleware as well as the b
 Nevertheless, I have managed to run the whole service with one command at all using *concurrently* npm modul.
 You can see the run command above.
 
+<<<<<<< HEAD
 </p>
+=======
+</p>
+>>>>>>> 0c0d96a92ddb475e0e16fa742a34987ca09d0d82
