@@ -36,7 +36,10 @@ export class MoviesService {
     })
   }
   async deleteMovie(id:number){
-
+    const endpoint = `${API}/movies/${id}`
+    const data = await fetch(endpoint, {
+      method:"DELETE"
+    })
   }
   async addMovie(movie: movie){
     const endpoint = `${API}/movies`

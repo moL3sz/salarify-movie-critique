@@ -248,6 +248,39 @@ export const updateMovie = (movie: movie,res: Response) =>{
     
 }
 
+//delete movie
+export const deleteMovie = (id: string, res: Response) =>{
+    try{        
+        const MOVIE_DELETE_SQL =  `
+            DELETE FROM movies WHERE id = ?
+        `;
+
+
+        const RATINGS_DELETE_SQL =  `
+            DELETE FROM ratings WHERE movie_id = ?
+        `
+
+        const m_delete_stmt = db.prepare(MOVIE_DELETE_SQL);
+        const r_delete_stmt = db.prepare(RATINGS_DELETE_SQL);
+
+        m_delete_stmt.run(id);
+        r_delete_stmt.run(id);
+
+
+        
+        // :| async db query makes it hard and complex :(
+        res.send({
+            success:true
+        })
+    
+    }
+    catch(e){
+        res.send({
+            success:false
+        })
+    }
+
+}
 
 /*export const uploadData = ()=>{
     const path = __dirname + "\\data.json"

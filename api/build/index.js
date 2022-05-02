@@ -19,6 +19,10 @@ app.get("/movies/:id", (req, res) => {
     const id = req.params.id;
     (0, database_1.getMovieById)(id, res);
 });
+app.delete("/movies/:id", (req, res) => {
+    const id = req.params.id;
+    (0, database_1.deleteMovie)(id, res);
+});
 app.post("/movies", (req, res) => {
     const { movie } = req.body;
     (0, database_1.addMovie)(movie, res);

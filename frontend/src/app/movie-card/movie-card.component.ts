@@ -21,6 +21,8 @@ export class MovieCardComponent implements OnInit {
         ref: this.movieDialog
       }
     })
+    this.movieDialog.afterAllClosed.subscribe(()=>{
+    })
 
 
   }

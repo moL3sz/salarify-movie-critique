@@ -1,7 +1,7 @@
 import express, {Express, Request,Response} from "express";
 import {PORT} from "./misc/globals";
 import cors from "cors"
-import {addMovie, getMovieById, getMovies, getPageSize, updateMovie} from "./modules/db/database";
+import {addMovie, deleteMovie, getMovieById, getMovies, getPageSize, updateMovie} from "./modules/db/database";
 const app: Express = express();
 
 app.use(express.json()) //middleware for json parse
@@ -16,6 +16,10 @@ app.get("/movies/page/:page",(req:Request, res:Response)=>{
 app.get("/movies/:id",(req:Request, res:Response) => {
     const id = req.params.id
     getMovieById(id, res);
+})
+app.delete("/movies/:id",(req:Request, res:Response) => {
+    const id = req.params.id
+    deleteMovie(id, res);
 })
 app.post("/movies",(req: Request, res:Response)=>{
     const {movie} = req.body

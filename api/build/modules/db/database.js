@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateMovie = exports.getMovieById = exports.getPageSize = exports.getMovies = exports.addMovie = void 0;
+exports.deleteMovie = exports.updateMovie = exports.getMovieById = exports.getPageSize = exports.getMovies = exports.addMovie = void 0;
 const sqlite3 = require("sqlite3").verbose();
 const db = new sqlite3.Database(__dirname + "/database.sqlite");
 const validateMovie = (movie) => {
@@ -192,6 +192,31 @@ const updateMovie = (movie, res) => {
     }
 };
 exports.updateMovie = updateMovie;
+//delete movie
+const deleteMovie = (id, res) => {
+    try {
+        const MOVIE_DELETE_SQL = `
+            DELETE FROM movies WHERE id = ?
+        `;
+        const RATINGS_DELETE_SQL = `
+            DELETE FROM ratings WHERE movie_id = ?
+        `;
+        const m_delete_stmt = db.prepare(MOVIE_DELETE_SQL);
+        const r_delete_stmt = db.prepare(RATINGS_DELETE_SQL);
+        m_delete_stmt.run(id);
+        r_delete_stmt.run(id);
+        // :| async db query makes it hard and complex :(
+        res.send({
+            success: true
+        });
+    }
+    catch (e) {
+        res.send({
+            success: false
+        });
+    }
+};
+exports.deleteMovie = deleteMovie;
 /*export const uploadData = ()=>{
     const path = __dirname + "\\data.json"
     const data = fs.readFileSync(path, 'utf-8')

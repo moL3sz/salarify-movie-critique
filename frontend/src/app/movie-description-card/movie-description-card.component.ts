@@ -52,6 +52,7 @@ export class MovieDescriptionCardComponent implements OnInit {
     this.data.ref.closeAll()
   }
   delete(): void{
+    this.service.deleteMovie(this.movie?.id || -1)
 
   }
   edit(): void{
@@ -63,7 +64,7 @@ export class MovieDescriptionCardComponent implements OnInit {
         movie:this.movie
       }
     })
-
+    this.data.ref.afterAllClosed.subscribe(()=>{})
   }
 
 
