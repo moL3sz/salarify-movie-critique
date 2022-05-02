@@ -1,34 +1,58 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteMovie = exports.updateMovie = exports.getMovieById = exports.getPageSize = exports.getMovies = exports.addMovie = void 0;
+const sql_1 = require("./sql");
 const sqlite3 = require("sqlite3").verbose();
 const db = new sqlite3.Database(__dirname + "/database.sqlite");
 const validateMovie = (movie) => {
-    if (movie.name != "")
+    //this must be the first priority name and year
+    if (movie.name === "")
         return false;
     if (!parseInt(movie.year)) //check if year is a number
         return false;
+    if (movie.director === "") {
+        return false;
+    }
+    if (movie.writers === "") {
+        return false;
+    }
+    if (movie.stars === "") {
+        return false;
+    }
+    if (movie.img_url === "") {
+        return false;
+    }
+    if (movie.review === "") {
+        return false;
+    }
     return true;
 };
 const addMovie = (movie, res) => {
+    if (!validateMovie(movie)) {
+        res.send({
+            valid: false,
+            success: false
+        });
+        return;
+    }
     try {
         db.serialize(() => {
-            const SQL_MOVIE = "INSERT INTO movies (name, year, director, stars, writers, img_url, review) VALUES (?, ?, ?, ?, ?, ?, ?)";
-            const SQL_RATING = "INSERT INTO ratings (movie_id, directing, acting, costume_design, editing, music, visual_effects, screenplay) VALUES (?,?, ?, ?, ?, ?, ?, ?)";
-            const movie_stmt = db.prepare(SQL_MOVIE);
-            const rate_stmt = db.prepare(SQL_RATING);
+            const movie_stmt = db.prepare(sql_1.MOVIE_ADD_SQL);
+            const rate_stmt = db.prepare(sql_1.RATING_ADD_SQL);
             movie_stmt.run([movie.name, movie.year, movie.director, movie.stars, movie.writers, movie.img_url, movie.review]);
             const rating = movie.ratings;
-            db.get("SELECT id from movies order by id desc limit 1", (err, result) => {
+            db.get(sql_1.GET_LAST_MOVIE_ID_SQL, (err, result) => {
                 rate_stmt.run([result.id, rating.directing, rating.acting, rating.costume_design, rating.editing, rating.music, rating.visual_effects, rating.screenplay]);
             });
         });
         res.send({
+            valid: true,
             success: true,
         });
     }
     catch (e) {
         res.send({
+            valid: true,
             success: false
         });
     }
@@ -36,12 +60,7 @@ const addMovie = (movie, res) => {
 exports.addMovie = addMovie;
 const getMovies = (page_number, res) => {
     const offset = (page_number - 1) * 6; //because 3*2 grid has 6 cells
-    //partial query
-    const SQL = `SELECT id,img_url, name,year,r.* from movies m
-                 INNER JOIN ratings r
-                 ON m.id = r.movie_id
-                 LIMIT 6 OFFSET ?`;
-    const movies = db.prepare(SQL);
+    const movies = db.prepare(sql_1.GET_PARTIAL_MOVIES_PAGE_SQL);
     movies.all(offset, (err, result) => {
         if (err) {
             res.send({
@@ -70,7 +89,7 @@ const getMovies = (page_number, res) => {
 exports.getMovies = getMovies;
 //get the page number size
 const getPageSize = (res) => {
-    db.get("SELECT count(*) as size from movies ", (err, result) => {
+    db.get(sql_1.GET_PAGE_SIZE_SQL, (err, result) => {
         if (err) {
             res.send({
                 page_size: 0
@@ -85,11 +104,7 @@ const getPageSize = (res) => {
 exports.getPageSize = getPageSize;
 //will send back the full detailed version of the movie
 const getMovieById = (id, res) => {
-    const SQL = `SELECT *, r.* FROM movies m
-        INNER JOIN ratings r 
-         ON m.id = r.movie_id
-        where id = ?`;
-    const movie = db.prepare(SQL);
+    const movie = db.prepare(sql_1.GET_MOVIE_DETAILED);
     movie.get(id, (err, row) => {
         //map the movie for the correct format
         const movieResponse = {
@@ -128,28 +143,15 @@ const getMovieById = (id, res) => {
 exports.getMovieById = getMovieById;
 //update movie
 const updateMovie = (movie, res) => {
-    const MOVIE_UPDATE_SQL = `
-    UPDATE movies SET name = ?,
-                   year = ?,
-                   director = ?,
-                   writers = ?,
-                   stars = ?,
-                   img_url = ?,
-                   review = ?
-    WHERE id = ?
-    `;
-    const RATINGS_UPDATE_SQL = `
-    UPDATE ratings SET directing = ?,
-                    acting = ?,
-                    costume_design = ?,
-                    editing = ?,
-                    music = ?,
-                    visual_effects = ?,
-                    screenplay = ?
-    WHERE movie_id = ?
-    `;
+    if (!validateMovie(movie)) {
+        res.send({
+            valid: false,
+            success: false
+        });
+        return;
+    }
     try {
-        const m_update_stmt = db.prepare(MOVIE_UPDATE_SQL);
+        const m_update_stmt = db.prepare(sql_1.MOVIE_UPDATE_SQL);
         m_update_stmt.run([
             movie.name,
             movie.year,
@@ -159,13 +161,9 @@ const updateMovie = (movie, res) => {
             movie.img_url,
             movie.review,
             movie.id
-        ], (err, r) => {
-            console.log(err);
-        });
+        ]);
         m_update_stmt.finalize();
-        console.log("ASDAS");
-        const r_update_stmt = db.prepare(RATINGS_UPDATE_SQL);
-        console.log("ASDAS");
+        const r_update_stmt = db.prepare(sql_1.RATINGS_UPDATE_SQL);
         r_update_stmt.run([
             movie.ratings.directing,
             movie.ratings.acting,
@@ -175,19 +173,17 @@ const updateMovie = (movie, res) => {
             movie.ratings.visual_effects,
             movie.ratings.screenplay,
             movie.id
-        ], (err, r) => {
-            console.log(err);
-        });
-        console.log("ASDAS");
+        ]);
         r_update_stmt.finalize();
-        console.log("ASDAS");
         res.send({
-            success: true
+            valid: true,
+            success: true,
         });
     }
     catch (error) {
         res.send({
-            success: false
+            valid: true,
+            success: false,
         });
     }
 };
@@ -195,14 +191,8 @@ exports.updateMovie = updateMovie;
 //delete movie
 const deleteMovie = (id, res) => {
     try {
-        const MOVIE_DELETE_SQL = `
-            DELETE FROM movies WHERE id = ?
-        `;
-        const RATINGS_DELETE_SQL = `
-            DELETE FROM ratings WHERE movie_id = ?
-        `;
-        const m_delete_stmt = db.prepare(MOVIE_DELETE_SQL);
-        const r_delete_stmt = db.prepare(RATINGS_DELETE_SQL);
+        const m_delete_stmt = db.prepare(sql_1.MOVIE_DELETE_SQL);
+        const r_delete_stmt = db.prepare(sql_1.RATINGS_DELETE_SQL);
         m_delete_stmt.run(id);
         r_delete_stmt.run(id);
         // :| async db query makes it hard and complex :(

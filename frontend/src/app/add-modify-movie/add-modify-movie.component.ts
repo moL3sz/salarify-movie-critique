@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { capitalize, rating_keys } from 'src/misc/globals';
 import { movie, rating, simple_movie } from 'src/misc/models';
 import { MoviesService } from '../movies/movies.service';
@@ -17,7 +18,8 @@ export class AddModifyMovieComponent implements OnInit {
     ref: any
     movie: movie
   },
-    private service: MoviesService) { }
+    private service: MoviesService,
+    private validateSnakbar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.movie = this.data.movie;
@@ -80,10 +82,23 @@ export class AddModifyMovieComponent implements OnInit {
       ratings: ratings
     }
     if(this.movie){
-      this.service.updateMovie(new_movie)
+      this.service.updateMovie(new_movie).then(res=>{
+        this.validateSnakbar.open(res.valid ? "✔ Successfully updated!"
+                                            : "✖ Invalid data for the movies"
+        ,"Close",{
+          duration: 3000
+        })
+      })
     }
     else{
-      this.service.addMovie(new_movie)
+      this.service.addMovie(new_movie).then(res=>{
+        this.validateSnakbar.open(res.valid ? "✔ Successfully added!"
+                                            : "✖ Invalid data for the movies"
+        ,"Close",{
+          duration: 3000,
+          
+        })
+      })
     }
 
 }

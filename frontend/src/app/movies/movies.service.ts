@@ -21,7 +21,7 @@ export class MoviesService {
       return {success: false, movies:[]}
     }
   }
-  async updateMovie(movie: movie){
+  async updateMovie(movie: movie): Promise<{success:boolean, valid:boolean}>{
     const endpoint = `${API}/movies`
     const data = await fetch(endpoint,{
       method:"PUT",
@@ -34,6 +34,11 @@ export class MoviesService {
         movie:movie
       })
     })
+    const parsed = await data.json()
+    return {
+      success:parsed.success,
+      valid:parsed.valid
+    }
   }
   async deleteMovie(id:number){
     const endpoint = `${API}/movies/${id}`
@@ -41,7 +46,7 @@ export class MoviesService {
       method:"DELETE"
     })
   }
-  async addMovie(movie: movie){
+  async addMovie(movie: movie): Promise<{success:boolean, valid:boolean}>{
     const endpoint = `${API}/movies`
     console.log(movie)
     const data = await fetch(endpoint,{
@@ -55,6 +60,11 @@ export class MoviesService {
         movie:movie
       })
     })
+    const parsed = await data.json()
+    return {
+      success:parsed.success,
+      valid:parsed.valid
+    }
   }
   async getPages(): Promise<{success: boolean, size: number}>{
     try {
