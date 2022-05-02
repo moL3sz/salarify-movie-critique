@@ -1,0 +1,26 @@
+{
+    "name": "salarify-movie-critique",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "install": "cd frontend && npm install && cd ../api && npm install",
+        "ui": "cd frontend && npm start",
+        "api": "cd api && npm start",
+        "dev": "npx concurrently \"npm run api\" \"npm run ui\""
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/moL3sz/salarify-movie-critique.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/moL3sz/salarify-movie-critique/issues"
+    },
+    "homepage": "https://github.com/moL3sz/salarify-movie-critique#readme",
+    "devDependencies": {
+        "concurrently": "^7.1.0"
+    }
+}

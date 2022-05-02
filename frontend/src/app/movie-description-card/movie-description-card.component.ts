@@ -3,6 +3,7 @@ import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 import {MoviesService} from "../movies/movies.service";
 import {AddModifyMovieComponent} from "../add-modify-movie/add-modify-movie.component";
 import {movie} from "../../misc/models";
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-movie-description-card',
@@ -13,11 +14,14 @@ export class MovieDescriptionCardComponent implements OnInit {
 
   movie?: movie;
   constructor(
+
     @Inject(MAT_DIALOG_DATA) public data: {
       id:number
       ref: any
-    }, private service: MoviesService,
-    public editDialog: MatDialog
+    },
+     private service: MoviesService,
+     public editDialog: MatDialog,
+     private deleteResponse: MatSnackBar
 
   ) { }
 
@@ -49,11 +53,14 @@ export class MovieDescriptionCardComponent implements OnInit {
     }
   }
   close(){
-    this.data.ref.closeAll()
+    this.data.ref.closeAll({data:"asd"})
   }
   delete(): void{
-    this.service.deleteMovie(this.movie?.id || -1)
-
+    this.service.deleteMovie(this.movie?.id || -1).then(res =>{
+      this.deleteResponse.open(res.success ? "✔ Successfully deleted!"
+                                           : "✖ Something went wrong")
+    })
+    this.data.ref.closeAll()
   }
   edit(): void{
     this.data.ref.closeAll()

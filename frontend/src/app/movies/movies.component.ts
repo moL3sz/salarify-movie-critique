@@ -12,6 +12,8 @@ export class MoviesComponent implements OnInit {
   // currentPage: number;
   currentMovies: partial_movie[] = []
   currentPage: number = 1;
+
+
   constructor(private service: MoviesService) { }
   ngOnInit(): void {
     // get movies from the API

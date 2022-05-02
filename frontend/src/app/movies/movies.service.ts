@@ -7,6 +7,7 @@ import {API} from "../../misc/globals";
 })
 export class MoviesService {
 
+
   constructor() { }
   async getMovies(page: number): Promise<{ success:boolean, movies: partial_movie[] }>{
     const endpoint = `${API}/movies/page/${page}`
@@ -40,11 +41,15 @@ export class MoviesService {
       valid:parsed.valid
     }
   }
-  async deleteMovie(id:number){
+  async deleteMovie(id:number): Promise<{success:true}>{
     const endpoint = `${API}/movies/${id}`
     const data = await fetch(endpoint, {
       method:"DELETE"
     })
+    const parsed = await data.json()
+    return {
+      success: parsed.success
+    }
   }
   async addMovie(movie: movie): Promise<{success:boolean, valid:boolean}>{
     const endpoint = `${API}/movies`
