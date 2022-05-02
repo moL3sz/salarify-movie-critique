@@ -1,19 +1,19 @@
 <mat-toolbar color="primary" class="p-3">
-  <div class="left flex flex-row space-x-10 items-center">
-    <span class="text-3xl">
+    <div class="left flex flex-row space-x-10 items-center">
+        <span class="text-3xl">
       <img src="https://img.icons8.com/external-dreamcreateicons-outline-color-dreamcreateicons/64/000000/external-movie-museum-dreamcreateicons-outline-color-dreamcreateicons.png"/>
     </span>
-    <span class="text-lg">Home</span>
-    <button>Add</button>
-  </div>
+        <span class="text-lg">Home</span>
+        <button (click)="addMovie()">Add</button>
+    </div>
 
 
 
-  <span class="spacer"></span>
-  <mat-form-field class="p-2 scale-100 m-2"  [style.fontSize.px]=17 appearance="standard" style="">
-    <mat-label>Search</mat-label>
-    <input matInput class="">
-  </mat-form-field>
-  <button mat-raised-button class="bg-white text-black">Search</button>
+    <span class="spacer"></span>
+    <mat-form-field class="p-2 scale-100 m-2" [style.fontSize.px]=17 appearance="standard" style="">
+        <mat-label>Search</mat-label>
+        <input matInput class="">
+    </mat-form-field>
+    <button mat-raised-button class="bg-white text-black">Search</button>
 </mat-toolbar>
 <app-movies></app-movies>

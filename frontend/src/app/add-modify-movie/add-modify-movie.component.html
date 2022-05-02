@@ -1,21 +1,79 @@
 <div class="movie-add-edit h-fit w-[70vh] bg-white h-[90vh] text-zinc-500">
-  <div class="form p-4 grid grid-rows-4 grid-cols-2 gap-x-10 gap-y-10">
-    <div class="form-item flex flex-col">
-      <label for="title">Title</label>
-      <input type="text" id="title" placeholder="Default input"/>
-    </div>
-    <div class="form-item flex flex-col">
-      <label for="title">Year</label>
-      <input type="text" id="year" placeholder="Default input"/>
-    </div>
-    <div class="form-item flex flex-col">
-      <label for="title">Director</label>
-      <input type="text" id="director" placeholder="Default input"/>
-    </div>
-    <div class="form-item flex flex-col">
-      <label for="title">Stars</label>
-      <input type="text" id="stars" placeholder="Default input"/>
-    </div>
+    <div class="h-[5vh] bg-pink p-2 px-6 text-white flex items-center">
+        <p *ngIf="movie">Edit a review</p>
+        <p *ngIf="!movie">Add a new review</p>
 
-  </div>
+    </div>
+    <div class="form p-4 grid grid-rows-4 grid-cols-2 gap-x-10 gap-y-5 pb-0">
+        <div class="form-item flex flex-col">
+            <label for="m-name">Name</label>
+            <input type="text" id="m-name" placeholder="Default input" [defaultValue]="movie?.name || ''" />
+        </div>
+        <div class="form-item flex flex-col">
+            <label for="title">Year</label>
+            <input type="text" id="m-year" placeholder="Default input" [defaultValue]="movie?.year || ''" />
+        </div>
+
+        <div class="form-item flex flex-col">
+            <label for="m-directors">Director</label>
+            <input type="text" id="m-directors" placeholder="Default input" [defaultValue]="movie?.director || ''" />
+        </div>
+        <div class="form-item flex flex-col">
+            <label for="m-stars">Stars</label>
+            <input type="text" id="m-stars" placeholder="Default input" [defaultValue]="movie?.stars || ''" />
+        </div>
+        <div class="form-item flex flex-col">
+            <label for="m-writers">Writers</label>
+            <input type="text" id="m-writers" placeholder="Default input" [defaultValue]="movie?.writers || ''" />
+        </div>
+        <div class="form-item flex flex-col">
+            <label for="title">Image URL</label>
+            <input type="text" id="m-img_url" placeholder="Default input" [defaultValue]="movie?.img_url || ''" />
+        </div>
+        <div class="form-item col-span-2 w-full">
+            <textarea name="review" id="m-review" class="w-full" rows="3" [defaultValue]="movie?.review || ''"></textarea>
+        </div>
+    </div>
+    <div class="px-4">
+        <div class="divider my-4 "></div>
+    </div>
+    <div class="rating-change pl-4 pr-20">
+        <p style="color: #27272a">Ratings</p>
+        <div class="rating-grid flex flex-col space-y-2">
+            <div class="rating-header flex flex-row justify-between">
+                <div class="grow shrink basis-0"></div>
+                <div class="rate-value-holder flex flex-row space-x-[6.1vh] shrink basis-0 grow-[1.05]">
+                    <div class="rate-v" *ngFor="let _ of [].constructor(5); let rv = index">
+                        {{rv + 1}}
+                    </div>
+                </div>
+            </div>
+            <div class="rating-item flex flex-row" *ngFor="let key of objectKeys(movie?.ratings || {
+                directing: -1,
+                acting: -1,
+                costume_design: -1,
+                editing: -1,
+                music: -1,
+                visual_effects: -1,
+                screenplay: -1
+            }); let j=index ">
+                <div class="rating-name">
+                    {{parse(key)}}
+                </div>
+                <mat-radio-group class="flex flex-row space-x-10">
+                    <mat-radio-button class="scale-[1.1]" *ngFor="let i of [].constructor(5); let v = index" [value]="v+1" color="primary" [checked]="movie ? toint(objectValues(movie?.ratings || {})[j]) === (v+1): false" class="{{key}}-radio">
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div>
+    </div>
+    <div class="px-4 ">
+        <div class="divider my-4 "></div>
+    </div>
+    <div class="bts flex flex-row justify-end space-x-10 px-4 ">
+        <button mat-stroked-button class="edit " (click)="save() ">
+            {{movie ? "Save": "Add"}}
+        </button>
+        <button mat-stroked-button class="close text-pink " (click)="close() ">Close</button>
+    </div>
 </div>

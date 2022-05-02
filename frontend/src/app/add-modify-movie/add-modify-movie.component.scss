@@ -1,23 +1,38 @@
-.movie-add-edit{
-  .form{
-    input[type="text"]{
-      padding: 0.5rem;
-
-      border-radius: 0.5rem;
-      font-size: medium;
-      border-color: rgba(110, 110, 110, 0.35) !important;
-      border: 1px solid;
+.movie-add-edit {
+    .form {
+        input[type="text"],
+        textarea {
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            font-size: medium;
+            border-color: rgba(110, 110, 110, 0.35) !important;
+            border: 1px solid;
+            resize: none;
+        }
+        input[type="text"]:focus {
+            outline: none !important;
+            border-color: rgba(110, 110, 110, 0.2) !important;
+            border: 1px solid;
+        }
+        label {
+            color: #27272a;
+            padding: 1vh 0;
+        }
+        textarea:focus {
+            outline: none !important;
+            border-color: rgba(110, 110, 110, 0.2) !important;
+            border: 1px solid;
+        }
+        & {
+            grid-template-columns: auto auto;
+            grid-template-rows: repeat(4, min-content);
+        }
     }
-    input[type="text"]:focus{
-      outline: none !important;
-      border-color: rgba(110, 110, 110, 0.2) !important;
-      border: 1px solid;
-
+     ::ng-deep .mat-radio-button.mat-accent .mat-radio-outer-circle {
+        border-color: rgba(110, 110, 110, 0.2) !important;
     }
-    label{
-      color: #27272a;
-      padding: 1vh 0;
-
+    .rating-item>* {
+        flex: 1;
     }
-  }
+    .rating-header>* {}
 }

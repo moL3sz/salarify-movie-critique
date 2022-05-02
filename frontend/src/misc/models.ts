@@ -9,6 +9,15 @@ export interface movie{
   review: string;
   ratings: rating
 }
+export interface simple_movie{
+  name: string;
+  year: string;
+  director: string;
+  stars: string;
+  writers: string;
+  img_url: string;
+  review: string;
+}
 export interface rating{
   directing: number;
   acting: number;

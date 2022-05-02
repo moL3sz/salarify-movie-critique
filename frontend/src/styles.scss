@@ -1,19 +1,37 @@
 /* You can add global styles to this file, and also import other style files */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
-overflow: hidden}
-$bluegray: #212121;
-$pink: #c2185b;
-.mat-dialog-container{
-  padding: 0 !important;
-  margin: 0 !important;
+html,
+body {
+    height: 100%;
 }
 
-.divider{
-  height: 1px;
-  width: 100%;
-  border-bottom: 1px solid rgba(134, 134, 134, 0.37);
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    overflow: hidden
+}
+
+$bluegray: #212121;
+$pink: #c2185b;
+.mat-dialog-container {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.divider {
+    height: 1px;
+    width: 100%;
+    border-bottom: 1px solid rgba(134, 134, 134, 0.37);
+}
+
+.mat-radio-outer-circle {
+    border-color: rgba(116, 116, 116, 0.364)!important;
+    /*outer ring color change*/
+}
+
+.mat-radio-button {
+    width: fit-content !important;
 }

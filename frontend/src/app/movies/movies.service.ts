@@ -22,16 +22,35 @@ export class MoviesService {
     }
   }
   async updateMovie(movie: movie){
-
+    const endpoint = `${API}/movies`
+    const data = await fetch(endpoint,{
+      method:"PUT",
+      mode:'cors',
+      headers: {
+        'Content-Type': 'application/json'
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: JSON.stringify({
+        movie:movie
+      })
+    })
   }
   async deleteMovie(id:number){
 
   }
-  async addMove(movie: movie){
+  async addMovie(movie: movie){
     const endpoint = `${API}/movies`
+    console.log(movie)
     const data = await fetch(endpoint,{
       method:"POST",
-      body: JSON.stringify(movie)
+      mode:'cors',
+      headers: {
+        'Content-Type': 'application/json'
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: JSON.stringify({
+        movie:movie
+      })
     })
   }
   async getPages(): Promise<{success: boolean, size: number}>{

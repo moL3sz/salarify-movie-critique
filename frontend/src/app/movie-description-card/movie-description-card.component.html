@@ -1,49 +1,46 @@
-<div class="movie-detailed h-fit max-w-[60vh] h-[90vh] bg-white">
-  <div class="movie-img h-[20vh] w-full bg-white">
-    <img src="{{movie?.img_url}}" alt="" width="100%">
-  </div>
-  <div class="movie-title bg-pink w-full text-center h-[8vh] flex items-center flex-col justify-center">
-    <p>{{movie?.name}}.</p>
-    <p>{{movie?.year}}</p>
-  </div>
-  <div class="description text-zinc-500 p-4 txt-md flex-col flex justify-between h-auto">
-    <div class="movie-desc flex flex-col space-y-2">
-      <p><strong>Director: </strong> {{movie?.director}}</p>
-      <p><strong>Starts: </strong> {{movie?.stars}}</p>
-      <p><strong>Writers: </strong> {{movie?.writers}}</p>
-      <p><strong>Review: </strong> {{movie?.review}}</p>
-
+<div class="movie-detailed h-fit w-[60vh]  h-[90vh] bg-white">
+    <div class="movie-img h-[20vh] w-full bg-white">
+        <img src="{{movie?.img_url}}" alt="" width="100%">
     </div>
-
-
-    <div class="movie-detailed-rating">
-      <div class="divider my-5"></div>
-      <div class="scoring flex flex-row justify-between">
-        <div class="scores">
-          <p>Directing: {{movie?.ratings?.directing}} / 5</p>
-          <p>Acting: {{movie?.ratings?.acting}} / 5</p>
-          <p>Costume design:: {{movie?.ratings?.costume_design}} / 5</p>
-          <p>Editing: {{movie?.ratings?.editing}} / 5</p>
-          <p>Music: {{movie?.ratings?.music}} / 5</p>
-          <p>Visual effects: {{movie?.ratings?.visual_effects}} / 5</p>
-          <p>Screen play: {{movie?.ratings?.screenplay}} / 5</p>
+    <div class="movie-title bg-pink w-full text-center h-[8vh] flex items-center flex-col justify-center">
+        <p>{{movie?.name}}.</p>
+        <p>{{movie?.year}}</p>
+    </div>
+    <div class="description text-zinc-500 p-4 txt-md flex-col flex justify-between h-auto">
+        <div class="movie-desc flex flex-col space-y-2">
+            <p><strong>Director: </strong> {{movie?.director}}</p>
+            <p><strong>Starts: </strong> {{movie?.stars}}</p>
+            <p><strong>Writers: </strong> {{movie?.writers}}</p>
+            <p><strong>Review: </strong> {{movie?.review}}</p>
         </div>
-        <div class="overall">
-          <div class="box border border-zinc-300 border-2 rounded-sm w-40 h-40 text-center flex flex-col">
-            <p class="text-pink m-2">OVERALL SCORE: </p>
-            <div class="score bg-pink grow flex items-center justify-center text-white text-4xl">
-              {{getAVGRate()}}
+        <div class="movie-detailed-rating">
+            <div class="divider my-5"></div>
+            <div class="scoring flex flex-row justify-between">
+                <div class="scores">
+                    <p>Directing: {{movie?.ratings?.directing}} / 5</p>
+                    <p>Acting: {{movie?.ratings?.acting}} / 5</p>
+                    <p>Costume design:: {{movie?.ratings?.costume_design}} / 5</p>
+                    <p>Editing: {{movie?.ratings?.editing}} / 5</p>
+                    <p>Music: {{movie?.ratings?.music}} / 5</p>
+                    <p>Visual effects: {{movie?.ratings?.visual_effects}} / 5</p>
+                    <p>Screen play: {{movie?.ratings?.screenplay}} / 5</p>
+                </div>
+                <div class="overall">
+                    <div class="box border border-zinc-300 border-2 rounded-sm w-40 h-40 text-center flex flex-col">
+                        <p class="text-pink m-2">OVERALL SCORE: </p>
+                        <div class="score bg-pink grow flex items-center justify-center text-white text-4xl">
+                            {{getAVGRate()}}
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
+            <div class="divider my-5"></div>
+            <div class="bts flex flex-row justify-end space-x-10">
+                <button mat-stroked-button class="delete" (click)="delete()">Delete</button>
+                <button mat-stroked-button class="edit" (click)="edit()">Edit</button>
+                <button mat-stroked-button class="close text-pink" (click)="close()">Close</button>
+            </div>
         </div>
-      </div>
-      <div class="divider my-5"></div>
-      <div class="bts flex flex-row justify-end space-x-10">
-        <button mat-stroked-button class="delete" (click)="delete()">Delete</button>
-        <button mat-stroked-button class="edit" (click)="edit()">Edit</button>
-        <button mat-stroked-button class="close text-pink" (click)="close()">Close</button>
-      </div>
-    </div>
 
-  </div>
+    </div>
 </div>

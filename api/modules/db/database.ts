@@ -14,7 +14,6 @@ const validateMovie = (movie: movie): boolean=>{
 
 }
 
-
 export const addMovie = (movie: movie, res: Response) =>{
     try{
         db.serialize(()=> {
@@ -30,7 +29,6 @@ export const addMovie = (movie: movie, res: Response) =>{
         })
         res.send({
             success:true,
-            movie:movie
         })
     }
     catch (e){
@@ -173,7 +171,81 @@ export const getMovieById = (id: string, res: Response)=>{
     })
 }
 
-export const updateMovie = (movie: movie) =>{
+//update movie
+export const updateMovie = (movie: movie,res: Response) =>{
+    const MOVIE_UPDATE_SQL = `
+    UPDATE movies SET name = ?,
+                   year = ?,
+                   director = ?,
+                   writers = ?,
+                   stars = ?,
+                   img_url = ?,
+                   review = ?
+    WHERE id = ?
+    `;
+
+    const RATINGS_UPDATE_SQL = `
+    UPDATE ratings SET directing = ?,
+                    acting = ?,
+                    costume_design = ?,
+                    editing = ?,
+                    music = ?,
+                    visual_effects = ?,
+                    screenplay = ?
+    WHERE movie_id = ?
+    `;
+
+    try {
+        const m_update_stmt = db.prepare(MOVIE_UPDATE_SQL);
+        m_update_stmt.run(
+            [
+                movie.name,
+                movie.year,
+                movie.director, 
+                movie.writers, 
+                movie.stars, 
+                movie.img_url, 
+                movie.review,
+                movie.id
+            ],(err:Error,r:any)=>{
+                console.log(err)
+            })
+        
+        m_update_stmt.finalize()
+        console.log("ASDAS")
+    
+        const r_update_stmt = db.prepare(RATINGS_UPDATE_SQL);
+        console.log("ASDAS")
+
+        r_update_stmt.run(
+            [
+                movie.ratings.directing,
+                movie.ratings.acting,
+                movie.ratings.costume_design,
+                movie.ratings.editing,
+                movie.ratings.music,
+                movie.ratings.visual_effects,
+                movie.ratings.screenplay,
+                movie.id
+            ],(err:Error,r:any)=>{
+                console.log(err)
+            }
+        )
+        console.log("ASDAS")
+
+        r_update_stmt.finalize()
+        console.log("ASDAS")
+
+        res.send({
+            success:true
+        })
+    } catch (error) {
+        res.send({
+            success:false
+        })
+    }
+   
+    
 }
 
 
